@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class payment extends Model
+class Product extends Model
 {
     public $fillable = [
-        'pay',
+        'price',
+        'stock',
+        'name',
     ];
      public function user(){
         return $this->belongsTo(User::class,'user_id');
     }
-    public function prodect(){
-        return $this->belongsTo(Product::class,'pro_id');
+    public function prodectd(){
+        return $this->hasOneThrough(product_detail::class,'pro_id');
     }
 }

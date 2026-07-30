@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PardakhteController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdectController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QarseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -16,6 +18,6 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('/user',UserController::class);
 Route::apiResource('/payments',PaymentController::class);
 Route::apiResource('/user',UserController::class);
-Route::apiResource('/qars',QarseController::class);
-Route::apiResource('/prodect',ProdectController::class);
+Route::apiResource('/qars',InstallmentController::class);
+Route::apiResource('/prodect',ProductController::class);
 // route::prefix('dashbored')->middleware('auth:sanctum')

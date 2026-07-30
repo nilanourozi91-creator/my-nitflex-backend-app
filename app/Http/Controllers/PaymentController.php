@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -12,10 +11,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-       $payments= payment::with(['user','prodect','qarse'])->get();
-        return response()->json([
-            'data'=>$payments
-        ]);
+        //
     }
 
     /**

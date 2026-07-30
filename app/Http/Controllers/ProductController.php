@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\prodect;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProdectController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       $pro= prodect::with(['prodect_d','user'])->paginate(10);
+       $x= Product::with(['user','prodectd'])->get();
         return response()->json([
-        'data'=>$pro
+            'data'=>$x
         ]);
     }
 
@@ -23,23 +23,8 @@ class ProdectController extends Controller
      */
     public function store(Request $request)
     {
-        $prodects=prodect::create([
-            'name'=>$request->name,
-            'stock'=>$request->stock,
-            'price'=>$request->price,
-        ]);
-         $prodects->prodect_d()->create([
-            'amount'=>$request->amount,
-            'catagory'=>$request->catagory,
-            'brand'=>$request->brand,
-            'description'=>$request->description,
-         ]);
-         return response()->json([
-            'data'=>$prodects,
-            'success'=>true,
-         ]);
+        //
     }
-
 
     /**
      * Display the specified resource.

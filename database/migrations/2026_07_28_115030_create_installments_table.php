@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qarses', function (Blueprint $table) {
+        Schema::create('installments', function (Blueprint $table) {
             $table->id();
-            $table->date('qase_date')->default(now());
+            $table->date('qars_date')->default(now());
             $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('pro_id')->constrained('prodects','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pro_id')->constrained('products','id')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('qarses');
+        Schema::dropIfExists('installments');
     }
 };

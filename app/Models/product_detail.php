@@ -4,15 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class prodect_d extends Model
+class product_detail extends Model
 {
     public $fillable = [
-        'Amount',
-        'price',
-        'stock',
+        'amount',
     ];
-
     public function prodect(){
-        $this->belongsTo(prodect::class,'pro_id');
+        return $this->belongsTo(Product::class,'pro_id');
     }
 }
