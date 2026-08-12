@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\review;
 use Illuminate\Http\Request;
 
-class InstallmentController extends Controller
+class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+      
+        try {
+            $all=review::with(['products','users'])->get();
+        return response()->json([
+            'data'=>$all,
+        ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'data'=>'not have review'
+                ]);
+        }
     }
 
     /**

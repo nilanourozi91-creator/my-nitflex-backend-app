@@ -4,15 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class payment extends Model
+class Payment extends Model
 {
-    public $fillable = [
-        'pay',
+    protected $fillable = [
+        'order_id',
+        'amount',
+        'method',
+        'status',
+        'transaction_id',
+        'paid_at',
+        'notes',
     ];
-     public function user(){
-        return $this->belongsTo(User::class,'user_id');
-    }
-    public function prodect(){
-        return $this->belongsTo(Product::class,'pro_id');
+
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'paid_at' => 'datetime',
+    ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

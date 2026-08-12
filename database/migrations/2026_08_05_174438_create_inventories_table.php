@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('price');
-            $table->string('name');
-            $table->integer('stock');
-            $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('product_id')->unique()->constrained('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('quantity')->default(0);
+            $table->unsignedInteger('low_stock_limit')->default(10);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('inventories');
     }
 };

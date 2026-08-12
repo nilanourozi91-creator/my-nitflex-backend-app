@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('installments', function (Blueprint $table) {
+        Schema::create('wishlist_items', function (Blueprint $table) {
             $table->id();
-            $table->date('qars_date')->default(now());
-            $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('pro_id')->constrained('products','id')->onDelete('cascade')->onUpdate('cascade');
+             $table->foreignId('product_id')->constrained('products','id')->onDelete('cascade')->onUpdate('cascade');
+             $table->foreignId('wishlist_id')->constrained('wishlists','id')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->unique([ 'wishlist_id', 'product_id']);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('installments');
+        Schema::dropIfExists('wishlist_items');
     }
 };

@@ -13,6 +13,6 @@ class installment extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public function prodect(){
-        return $this->belongsTo(Product::class,'pro_id');
+        return $this->belongsTo(products::class,'pro_id');
     }
 }
