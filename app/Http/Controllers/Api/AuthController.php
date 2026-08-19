@@ -20,25 +20,31 @@ class AuthController extends Controller
             'name' => 'required', 'string', 'max:255',
             'email' =>'required','email','max:255','unique:users,email',
             'password' => 'required','string','min:8','confirmed',
+            'phoneNumber' => 'required','number','min:10','confirmed',
         ]);
-            $u=User::all();
-         if ($u && $request->email) {
-            $u->first();
-            return 'user get before';
-         }
+    //    $user= User::first();
+        //     $u=User::all();
+        //  if ($u && $request->email) {
+        //     $u->first();
+        //     return 'user get before';
+        //  }
+        // if ($user && $request->email) {
+        //     return response()->json([
+        //         'massege'=>'user the same of'.$user,    
+        //     ]);
+        // }
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'phoneNumber' => $validated['phoneNumber'],
             'password' => Hash::make($validated['password']),
         ]);
          if ($user && hash::check($request->password,$user->password)) {
              $token =$user->createToken('auth_token')->plainTextToken;
     
         return response()->json([
-            'success' => true,
-            'message' => 'Registration successful.',
-            'user' => $user,
-            'token' => $token,
+             'success' => true,
+            'data' => $token,
         ]);
          }
        } catch (Exception $error) {
@@ -50,9 +56,15 @@ class AuthController extends Controller
     // login section
         public function login(Request $request)
     {
-        $validated = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
+       try {
+         $validated = $request->validate([
+            'email' => 'required', 'email',
+            'password' => 'required', 'string','min:8',
+        ],[
+            'email.required'=>'the email is required',
+            'email.email'=>'the email should have @ and .com',
+            'password.required'=>'the password is required',
+            'password.min'=>'the password should be at least of 8',
         ]);
 
         $user = User::where('email', $validated['email'])->first();
@@ -65,10 +77,15 @@ class AuthController extends Controller
         $token = $user->createToken('freshstock')->plainTextToken;
         return response()->json([
             'success' => true,
-            'message' => 'Login successful.',
-            'user' => $user,
-            'token' => $token,
+            'data' => $token,
         ]);
+       } catch (Exception $error) {
+         return response()->json([
+            'massege'=>$error->getMessage(),
+            'success' => false,
+            // 'data' => 'someting went wrong',
+         ]);
+       }
     }
     // logout section
         public function logout(Request $request)
@@ -84,5 +101,12 @@ class AuthController extends Controller
             'massege'=>$error->getMessage(),
           ]);
        }
+    }
+
+    public function show( string $token){
+        $user=   User::where('remember_token',$token)->first();
+        return response()->json([
+            'data'=>$user
+        ]);
     }
 }

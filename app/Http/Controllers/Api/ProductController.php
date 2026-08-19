@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         //  $products=products::with(['category','details','inventory','imgall' ])->where('is_active', true)->latest()->paginate(12);
-        $products=products::with(['imgall','category','inventory','details','reviews'])->latest()->paginate(10);
+        $products=products::with(['imgall','category','inventory','details','reviews'])->latest()->get();
         // $products=products::all();
         return response()->json([
             'data' => $products,
@@ -82,11 +82,7 @@ class ProductController extends Controller
         $products=products::FindOrFail($id);
         return response()->json([
             'data'=>$products->load([
-            'category',
-            'details',
-            'inventory',
-            'imgall',
-            'reviews'
+            'imgall','category','inventory','details','reviews'
             ]),
         ]);
        
@@ -143,9 +139,9 @@ class ProductController extends Controller
      
 
     public function GetData() {
-        $products=products::with(['imgall','category','inventory','details','reviews'])->latest()->get();
+        $products=products::all();
         return response()->json([
-            'data' => $products,
+            'data' => $products->load(['imgall','details']),
         ]);
     }
 }

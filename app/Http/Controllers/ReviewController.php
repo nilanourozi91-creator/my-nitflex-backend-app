@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\review;
+use Exception;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -14,13 +15,13 @@ class ReviewController extends Controller
     {
       
         try {
-            $all=review::with(['products','users'])->get();
+            $all=review::all();
         return response()->json([
             'data'=>$all,
         ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $error) {
             return response()->json([
-                'data'=>'not have review'
+                'data'=>$error->getMessage(),
                 ]);
         }
     }

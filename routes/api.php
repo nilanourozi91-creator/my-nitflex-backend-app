@@ -125,3 +125,8 @@ Route::get('/prodata',[ProductController::class,'GetData']);
 Route::apiResource('/products',ProductController::class);
 Route::apiResource('/reviews',ReviewController::class);
 Route::apiResource('/catagory',CategoryController::class);
+// Route::apiResource('/User',UserController::class);
+// Route::apiResource('/a',AuthController::class);
+Route::post('/login',[AuthController::class, 'login']);
+Route::post('/register',[AuthController::class, 'register']);
+Route::get('/check_token',[AuthController::class, 'show']);
