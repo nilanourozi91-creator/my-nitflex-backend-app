@@ -3,21 +3,56 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Wishlist;
 use App\Models\WishlistItem;
+use Exception;
 use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
-    public function index(Request $request) {
-         $wishlist = Wishlist::firstOrCreate([ 'user_id' => $request->user()->id, ]);
-         $wishlist->load([ 'items.product', ]);
+    public function index(string $id) {
+     // $user=User::findOrFail($id);
+     //       try {
+     //              $wishlist = Wishlist::firstOrCreate([ 'user_id'=>$user]);
+     //     $wishlist->load([ 'items.product', ]);
          
-        return response()->json
-        ([ 'success' => true, 'data' => $wishlist, ]);
+     //    return response()->json
+     //    ([ 'success' => true, 'data' => $wishlist, ]);
 
+     //       } catch (Exception $error) {
+     //           return response()->json([
+     //                'data'=>$error->getMessage(),
+     //           ]);
+     //       }
 
-         } /** * Add product to wishlist */ 
+     //     }
+
+    $user = User::findOrFail($id);
+
+    try {
+
+        $wishlist = Wishlist::firstOrCreate([
+            'user_id' => $user->id,
+        ]);
+
+        $wishlist->load([
+            'items.product',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $wishlist,
+        ]);
+
+    } catch (Exception $error) {
+
+        return response()->json([
+            'success' => false,
+            'message' => $error->getMessage(),
+        ], 500);
+    }
+      /** * Add product to wishlist */ 
         public function store(Request $request) {
 
         $validated = $request->validate([

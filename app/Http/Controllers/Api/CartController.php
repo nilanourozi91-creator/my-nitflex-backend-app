@@ -14,7 +14,7 @@ class CartController extends Controller
      */
     public function index()
     {
-         $cart =Cart::all();
+         $cart =Cart::with(['user','items'])->get();
         return response()->json([
             'success' => true,
             'data' => $cart,
@@ -158,6 +158,6 @@ class CartController extends Controller
         private function getCart(Request $request)
        {
         return $request->user()->cart()->firstOrCreate([]);
-    }
+    }   
 }
 

@@ -22,17 +22,6 @@ class AuthController extends Controller
             'password' => 'required','string','min:8','confirmed',
             'phoneNumber' => 'required','number','min:10','confirmed',
         ]);
-    //    $user= User::first();
-        //     $u=User::all();
-        //  if ($u && $request->email) {
-        //     $u->first();
-        //     return 'user get before';
-        //  }
-        // if ($user && $request->email) {
-        //     return response()->json([
-        //         'massege'=>'user the same of'.$user,    
-        //     ]);
-        // }
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -49,7 +38,7 @@ class AuthController extends Controller
          }
        } catch (Exception $error) {
          return response()->json([
-            'massege'=>$error->getMessage(),
+            'massege'=>$error,
         ]);
        }
     }
